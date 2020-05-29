@@ -1,14 +1,9 @@
-//jshint esversion:6
-
 const express = require("express");
 const ejs = require("ejs");
 const bodyparser = require("body-parser");
 const mongoose = require("mongoose");
 require('dotenv').config();
-// const encrypt = require("mongoose-encryption");
-//const md5 = require("md5");
-// const bcrypt = require("bcrypt");
-// const saltRounds = 10;
+
 const session = require("express-session");
 const passport = require("passport");
 const passportLocalMongoose = require("passport-local-mongoose");
@@ -42,8 +37,6 @@ const userSchema = new mongoose.Schema({
 
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
-// const secret = "Thisisourlittlesecret";
-// userSchema.plugin(encrypt,{secret:process.env.SECRET,encryptedFields: ["password"]});
 
 const User = new mongoose.model("User",userSchema);
 
@@ -152,24 +145,7 @@ app.post("/register",function(req,res){
                 res.redirect("/secrets");
             });
         }
-    });
-
-    // bcrypt.hash((req.body.password), saltRounds, function(err, hash) {
-    //     const newUser = new User({
-    //         email : req.body.username,
-    //         password : hash
-    //     });
-    
-    //     newUser.save(function(err){
-    //         if(err){
-    //             console.log(err);
-    //         }
-    //         else{
-    //             res.render("secrets");
-    //         }
-    //     });
-    // });
-    
+    });    
 });
 
 app.post("/login",function(req,res){
@@ -190,29 +166,7 @@ app.post("/login",function(req,res){
     });
 
 
-    // const username = req.body.username;
-    // const user_password = req.body.password;
-    // User.findOne(
-    //     {email : username},
-    //     function(err,result){
-    //         if(err){
-    //             console.log(err);
-    //         }
-    //         else{
-    //         if(result){
-    //             bcrypt.compare(user_password, result.password, function(err, resu) {
-    //                  if(resu == true){
-    //                      res.render("secrets");
-    //                  }
-    //             });
-                        
-    //             }
-            
-    //         else{
-    //             res.render("register");
-    //         }
-    //     }
-    //     });
+    
 });
 
 app.listen(3000,function(){
